@@ -67,67 +67,65 @@ class LoginActivity : AppCompatActivity() {
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
-            val stringRequest: StringRequest = object : StringRequest(
-                Method.POST,
-                url,
-                Response.Listener { res ->
+            val stringRequest: StringRequest =
+                object : StringRequest(Method.POST, url, Response.Listener { res ->
                     try {
                         val gson = Gson()
                         val response = gson.fromJson(res.toString(), CommonResponse::class.java)
-                        if(response.status=="SUCCESS") {
+                        if (response.status == "SUCCESS") {
                             val user = gson.fromJson(
-                                JSONObject(res).getJSONObject("data").toString(),
-                                User::class.java
+                                JSONObject(res).getJSONObject("data").toString(), User::class.java
                             )
                             Log.i("login_res_data", user.name);
                             Log.i("login_res", response.toString())
                             val toast = Toast.makeText(this, response.message, Toast.LENGTH_SHORT)
                             toast.show()
-//                            startActivity(Intent(this,HomeActivity::class.java))
-                        }else{
-                            Log.i("login_res", res)
-                            val toast = Toast.makeText(this, response.message, Toast.LENGTH_SHORT)
-                            toast.show()
+                            startActivity(Intent(this,HomeActivity::class.java))
                         }
-
-
                     } catch (e: Exception) {
                         e.printStackTrace()
                         Log.e("login_err_res", e.message.toString());
                     }
-                },
-                Response.ErrorListener { res ->
-                    Log.i("login_err_res", res.message.toString())
-                }
-            ) {
-                override fun getBody(): ByteArray {
-                    return requestBody.toString().toByteArray(Charset.defaultCharset())
-                }
+                }, Response.ErrorListener { error ->
+                    val response = error.networkResponse.data.decodeToString();
+                    val jsonObject = JSONObject(response)
 
-                override fun getHeaders(): MutableMap<String, String> {
-                    val headers = HashMap<String, String>();
-                    headers["Content-Type"] = "application/json"
-                    return headers;
-                }
+                    Log.i("login_err_res Status :", error.networkResponse.statusCode.toString())
+                    Log.i("login_err_res:", jsonObject.toString())
 
-                override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
-                    return try {
-                        val headers = response?.headers
-                        val token = headers?.get("token")
-                        token?.let {
-                            Log.i("login_res_token", "Token: $it")
+                    val toast =
+                        Toast.makeText(this, jsonObject.getString("message"), Toast.LENGTH_SHORT)
+                    toast.show()
+                }) {
+                    override fun getBody(): ByteArray {
+                        return requestBody.toString().toByteArray(Charset.defaultCharset())
+                    }
+
+                    override fun getHeaders(): MutableMap<String, String> {
+                        val headers = HashMap<String, String>();
+                        headers["Content-Type"] = "application/json"
+                        return headers;
+                    }
+
+                    override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
+                        Log.i("login_res", response.toString())
+                        return try {
+                            val headers = response?.headers
+                            val token = headers?.get("token")
+                            token?.let {
+                                Log.i("login_res_token", "Token: $it")
+                            }
+                            saveShared(applicationContext, token.toString())
+                            Response.success(
+                                String(response?.data ?: ByteArray(0), Charsets.UTF_8),
+                                HttpHeaderParser.parseCacheHeaders(response)
+                            )
+
+                        } catch (e: Exception) {
+                            Response.error(ParseError(e))
                         }
-                        saveShared(applicationContext, token.toString())
-                        Response.success(
-                            String(response?.data ?: ByteArray(0), Charsets.UTF_8),
-                            HttpHeaderParser.parseCacheHeaders(response)
-                        )
-
-                    } catch (e: Exception) {
-                        Response.error(ParseError(e))
                     }
                 }
-            }
             queue.add(stringRequest)
         }
     }
