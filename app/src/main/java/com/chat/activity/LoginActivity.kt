@@ -1,9 +1,7 @@
 package com.chat.activity
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -81,6 +79,7 @@ class LoginActivity : AppCompatActivity() {
                             val toast = Toast.makeText(this, response.message, Toast.LENGTH_SHORT)
                             toast.show()
                             startActivity(Intent(this,HomeActivity::class.java))
+                            finish()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -133,6 +132,6 @@ class LoginActivity : AppCompatActivity() {
     fun saveShared(context: Context, value: String) {
         val preference: SharedPreference = SharedPreference()
         Log.i("shared:", value.toString())
-        preference.sharedAccessToken(context, value)
+        preference.setAccessToken(context, value)
     }
 }
