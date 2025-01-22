@@ -1,5 +1,6 @@
 package com.chat.activity
 
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.chat.R
 import com.google.android.material.navigation.NavigationView
@@ -28,6 +30,18 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val decorView = window.decorView
+            val windowInsetsController =
+                WindowInsetsControllerCompat(window, decorView)
+
+            // Ensure content respects the system bars (e.g., notch, pinhole camera)
+            ViewCompat.setOnApplyWindowInsetsListener(decorView) { view, insets ->
+                val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                view.setPadding(0, systemBarsInsets.top, 0, systemBarsInsets.bottom)
+                insets
+            }
+        }
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -36,7 +50,7 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
 
-        drawLayout = findViewById(R.id.drawerlayout)
+        drawLayout = findViewById(R.id.drawerlayout) // drawlayout is activity homepage
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, drawLayout, R.string.nav_open, R.string.nav_close)
 
