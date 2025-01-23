@@ -22,4 +22,10 @@ class SharedPreference {
         val preference: SharedPreferences = context.getSharedPreferences(fileName,Context.MODE_PRIVATE);
         preference.edit().putString("accessToken",accessToken).apply();
     }
+
+    /** Remove access token*/
+    fun remove(context: Context,key:String){
+        val preference: SharedPreferences = context.getSharedPreferences(fileName,Context.MODE_PRIVATE)
+        preference.edit().remove(key).apply();
+    }
 }
