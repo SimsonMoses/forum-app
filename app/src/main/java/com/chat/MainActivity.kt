@@ -21,13 +21,13 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        Timer().schedule(3000) {
+        Timer().schedule(1000) {
 
             val accessToken = SharedPreference().getAccessToken(applicationContext);
             if (accessToken.isBlank() || accessToken.isEmpty()) {
                 startActivity(Intent(applicationContext, RegisterActivity::class.java))
-            }else{
-                startActivity(Intent(applicationContext,HomeActivity::class.java))
+            } else {
+                startActivity(Intent(applicationContext, HomeActivity::class.java))
             }
 
             finish()

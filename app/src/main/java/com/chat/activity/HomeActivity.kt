@@ -1,7 +1,9 @@
 package com.chat.activity
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -12,14 +14,18 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.chat.R
+import com.chat.util.SharedPreference
+import com.chat.util.UtilityClass
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+import kotlin.math.log
 
 class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
     lateinit var drawLayout: DrawerLayout;
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle;
     lateinit var navigationView: NavigationView;
+    lateinit var sharedPreference: SharedPreference;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +49,8 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
             }
         }
 
+        sharedPreference = SharedPreference();
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         // Enable the "Up" button in the action bar
@@ -63,9 +71,22 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         navigationView.setNavigationItemSelectedListener(this)
     }
 
+    fun logout() {
+        // TODO: logout api, if session are maintained in backend system
+        Log.i("test", "Logout method triggered")
+        UtilityClass.showAlert(this,"Logout","Are sure need to logout", Runnable {
+            Log.i("test","runnable reached")
+            sharedPreference.remove(this,"accessToken")
+            startActivity(Intent(this,LoginActivity::class.java))
+            finish()
+        })
+
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.logout) {
             // call logout
+            logout()
         }
         return true;
     }
@@ -76,6 +97,5 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         }
         return super.onOptionsItemSelected(item)
     }
-
 
 }
