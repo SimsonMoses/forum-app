@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -14,11 +15,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.chat.R
+import com.chat.model.User
+import com.chat.service.UserService
 import com.chat.util.SharedPreference
 import com.chat.util.UtilityClass
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
-import kotlin.math.log
 
 class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
@@ -26,6 +28,7 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle;
     lateinit var navigationView: NavigationView;
     lateinit var sharedPreference: SharedPreference;
+    lateinit var user: User;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,15 +72,42 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
         navigationView = findViewById(R.id.navigationView)
         navigationView.setNavigationItemSelectedListener(this)
+
+        getData();
+    }
+
+    private fun getData() {
+//        TODO("Not yet implemented")
+        UserService().me(this) { userData ->
+            Log.i("home_page_me_api_callback","Triggered")
+            if (userData != null) {
+                user = userData;
+                val headerView = navigationView.getHeaderView(0)
+                val name: TextView = headerView.findViewById(R.id.name)
+                val email: TextView = headerView.findViewById(R.id.email)
+                name.text = user.name;
+                email.text = user.email;
+            } else {
+
+            }
+        }
+//        ForumService().exploreForums(this) { forum ->
+//            if (forum != null) {
+//                Toast.makeText(this, "Forum fetched: ${forum.name}", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Toast.makeText(this, "Failed To fetch forum", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+
     }
 
     fun logout() {
         // TODO: logout api, if session are maintained in backend system
         Log.i("test", "Logout method triggered")
-        UtilityClass.showAlert(this,"Logout","Are sure need to logout", Runnable {
-            Log.i("test","runnable reached")
-            sharedPreference.remove(this,"accessToken")
-            startActivity(Intent(this,LoginActivity::class.java))
+        UtilityClass.showAlert(this, "Logout", "Are sure need to logout", Runnable {
+            Log.i("test", "runnable reached")
+            sharedPreference.remove(this, "accessToken")
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         })
 
@@ -85,7 +115,6 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.logout) {
-            // call logout
             logout()
         }
         return true;

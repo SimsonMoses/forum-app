@@ -71,11 +71,12 @@ class LoginActivity : AppCompatActivity() {
                         val gson = Gson()
                         val response = gson.fromJson(res.toString(), CommonResponse::class.java)
                         if (response.status == "SUCCESS") {
-                            val user = gson.fromJson(
-                                JSONObject(res).getJSONObject("data").toString(), User::class.java
-                            )
-                            Log.i("login_res_data", user.name);
-                            Log.i("login_res", response.toString())
+                            // TODO: need to remove the user detail from the login api
+//                            val user = gson.fromJson(
+//                                JSONObject(res).getJSONObject("data").toString(), User::class.java
+//                            )
+//                            Log.i("login_res_data", user.name);
+//                            Log.i("login_res", response.toString())
                             val toast = Toast.makeText(this, response.message, Toast.LENGTH_SHORT)
                             toast.show()
                             startActivity(Intent(this,HomeActivity::class.java))
@@ -89,6 +90,7 @@ class LoginActivity : AppCompatActivity() {
                     val response = error.networkResponse.data.decodeToString();
                     val jsonObject = JSONObject(response)
 
+                    // TODO:
                     Log.i("login_err_res Status :", error.networkResponse.statusCode.toString())
                     Log.i("login_err_res:", jsonObject.toString())
 
