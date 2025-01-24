@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,9 +15,13 @@ import com.android.volley.Response.Listener
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.chat.activity.LoginActivity
+import com.chat.util.SharedPreference
+import com.chat.util.UtilityClass
 import org.json.JSONException
 import org.json.JSONObject
 import java.nio.charset.Charset
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -51,7 +56,7 @@ class RegisterActivity : AppCompatActivity() {
 
         register.setOnClickListener {
             val queue = Volley.newRequestQueue(applicationContext)
-            val url = "https://qflh6g8m-3000.inc1.devtunnels.ms" + "/api/user/register"
+            val url = SharedPreference().getEndPointHost(this) + "/api/user/register"
 
             val requestBody = JSONObject()
             try {
@@ -64,6 +69,13 @@ class RegisterActivity : AppCompatActivity() {
             val stringRequest: StringRequest =
                 object : StringRequest(Method.POST, url, Listener { res ->
                     Log.i("register_res", res)
+                    val toast =
+                        Toast.makeText(this, "You have registered successfully", Toast.LENGTH_SHORT)
+                    toast.show()
+                    Timer().schedule(1000) {
+                        startActivity(Intent(applicationContext, LoginActivity::class.java))
+                        finish()
+                    }
                 }, Response.ErrorListener { error ->
                     Log.i("register_err_res", error.message.toString())
                 }) {
