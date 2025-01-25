@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:padding="20px"
-    android:fitsSystemWindows="true">
+    android:layout_height="120dp"
+    android:padding="16dp"
+    android:fitsSystemWindows="true"
+    android:background="@color/material_dynamic_primary99"
+    android:gravity="center_vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User Name"
-        android:id="@+id/name"/>
+        android:id="@+id/name"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginBottom="4dp"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/email"
         android:layout_below="@id/name"
-        android:text="Email" />
+        android:text="Email"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif"
+    />
 
 </RelativeLayout>
