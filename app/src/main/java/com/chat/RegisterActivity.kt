@@ -56,7 +56,7 @@ class RegisterActivity : AppCompatActivity() {
 
         register.setOnClickListener {
             val queue = Volley.newRequestQueue(applicationContext)
-            val url = SharedPreference().getEndPointHost(this) + "/api/user/register"
+            val url = SharedPreference().getEndPointHost(this) + "/api/auth/register"
 
             val requestBody = JSONObject()
             try {

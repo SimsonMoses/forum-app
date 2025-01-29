@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.viewpager.widget.ViewPager
 import com.chat.R
 import com.chat.model.User
 import com.chat.service.UserService
@@ -21,6 +22,8 @@ import com.chat.util.SharedPreference
 import com.chat.util.UtilityClass
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.Tab
 
 class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
@@ -29,6 +32,9 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
     lateinit var navigationView: NavigationView;
     lateinit var sharedPreference: SharedPreference;
     lateinit var user: User;
+
+    lateinit var tabLayout: TabLayout
+    lateinit var viewPager: ViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,12 +79,20 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         navigationView = findViewById(R.id.navigationView)
         navigationView.setNavigationItemSelectedListener(this)
 
-        getData();
+        tabLayout = findViewById(R.id.tabLayout)
+        viewPager = findViewById(R.id.viewPager)
+
+        tabLayout.addTab(
+            tabLayout.newTab().setText("Forums")
+        )
+
+        getMe();
     }
 
-    private fun getData() {
+    private fun getMe() {
+        Log.i("home_activity_me_method","Me Function execution start")
 //        TODO("Not yet implemented")
-        UserService().me(this) { userData ->
+        UserService().me(applicationContext) { userData ->
             Log.i("home_page_me_api_callback","Triggered")
             if (userData != null) {
                 user = userData;

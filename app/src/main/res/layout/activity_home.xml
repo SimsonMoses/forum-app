@@ -11,16 +11,36 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:background="@color/white">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/white"
             android:theme="?attr/actionBarTheme"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
+            tools:layout_editor_absoluteY="0dp"
+            app:titleTextColor="@color/neutral_darker"/>
+
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_below="@id/toolbar"
+            android:layout_height="wrap_content"
+            android:id="@+id/tabLayout"
+            android:background="@color/neutral_gray_lightest"
+            android:contextClickable="false"
+            android:textAlignment="viewStart"
+            app:tabGravity="start"
+            app:tabSelectedTextAppearance="@color/cool_blue"
+            />
+        <androidx.viewpager.widget.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tabLayout"
+            android:id="@+id/viewPager"
+            />
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

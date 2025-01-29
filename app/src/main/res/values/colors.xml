@@ -2,4 +2,68 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="cornflower_blue_700">#90FAFEFF</color>
+
+    <!-- Grayscale Colors -->
+    <color name="gray_lightest">#dbd8d9</color>
+    <color name="gray_lighter">#b6b0b2</color>
+    <color name="gray_light">#94898d</color>
+    <color name="gray">#6f6568</color>
+    <color name="gray_dark">#4b4446</color>
+    <color name="gray_darker">#292526</color>
+    <color name="gray_darkest">#131011</color>
+
+    <!-- Blue Shades -->
+    <color name="blue_lightest">#ebecf4</color>
+    <color name="blue_lighter">#bec4dd</color>
+    <color name="blue_light">#929cc7</color>
+    <color name="blue">#6777af</color>
+    <color name="blue_dark">#48547e</color>
+    <color name="blue_darker">#2C3450</color>
+    <color name="blue_darkest">#121726</color>
+
+    <!-- Neutral Tones -->
+    <color name="neutral_lightest">#dadac7</color>
+    <color name="neutral_lighter">#b3b3a3</color>
+    <color name="neutral_light">#f2f2d9</color>
+    <color name="neutral">#d4d4be</color>
+    <color name="neutral_dark">#adad9a</color>
+    <color name="neutral_darker">#878778</color>
+    <color name="neutral_darkest">#636358</color>
+
+    <!-- Olive and Greenish Shades -->
+    <color name="olive_light">#414139</color>
+    <color name="olive">#22221d</color>
+    <color name="olive_dark">#8c8c80</color>
+    <color name="olive_darker">#68685e</color>
+    <color name="olive_darkest">#46463F</color>
+    <color name="forest_dark">#262622</color>
+    <color name="forest_darkest">#11110e</color>
+
+    <!-- Cool Blue Tones -->
+    <color name="cool_blue_lightest">#eff0f7</color>
+    <color name="cool_blue_lighter">#c7cde5</color>
+    <color name="cool_blue_light">#99a5d0</color>
+    <color name="cool_blue">#6c7fbb</color>
+    <color name="cool_blue_dark">#4C5C8C</color>
+    <color name="cool_blue_darker">#303b5c</color>
+    <color name="cool_blue_darkest">#171d31</color>
+
+    <!-- Neutral Gray Tones -->
+    <color name="neutral_gray_lightest">#EAEAEC</color>
+    <color name="neutral_gray_lighter">#c3c2c7</color>
+    <color name="neutral_gray_light">#9C9BA3</color>
+    <color name="neutral_gray">#777680</color>
+    <color name="neutral_gray_dark">#54535e</color>
+    <color name="neutral_gray_darker">#34333a</color>
+    <color name="neutral_gray_darkest">#161519</color>
+
+    <!-- Monochrome Grayscale -->
+    <color name="mono_lightest">#D9D9D9</color>
+    <color name="mono_lighter">#b2b2b2</color>
+    <color name="mono_light">#8c8c8c</color>
+    <color name="mono">#686868</color>
+    <color name="mono_dark">#464646</color>
+    <color name="mono_darker">#262626</color>
+    <color name="mono_darkest">#111111</color>
 </resources>

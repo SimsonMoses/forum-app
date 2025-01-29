@@ -37,7 +37,7 @@ class SharedPreference {
     fun getEndPointHost(context: Context): String {
         val preference: SharedPreferences =
             context.getSharedPreferences(fileName, Context.MODE_PRIVATE)
-        return preference.getString("apihost", "https://qflh6g8m-3000.inc1.devtunnels.ms")
+        return preference.getString("apihost", "https://forum-express-ms-production.up.railway.app")
             .toString();
     }
 }

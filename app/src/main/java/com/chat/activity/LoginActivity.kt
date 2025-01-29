@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
 
         login.setOnClickListener {
             val queue = Volley.newRequestQueue(applicationContext)
-            val url = "https://qflh6g8m-3000.inc1.devtunnels.ms" + "/api/user/login"
+            val url = SharedPreference().getEndPointHost(this)+ "/api/auth/login"
 
             val requestBody = JSONObject();
             try {
