@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
 import com.chat.R
+import com.chat.adapters.HomeTabAdapter
 import com.chat.model.User
 import com.chat.service.UserService
 import com.chat.util.SharedPreference
@@ -23,7 +24,6 @@ import com.chat.util.UtilityClass
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.Tab
 
 class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
@@ -86,14 +86,38 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
             tabLayout.newTab().setText("Forums")
         )
 
+        val adapter = HomeTabAdapter(this, supportFragmentManager, tabLayout.tabCount)
+        viewPager.adapter = adapter
+        viewPager.addOnPageChangeListener(
+            TabLayout.TabLayoutOnPageChangeListener(tabLayout)
+        )
+
+        tabLayout.addOnTabSelectedListener(
+            object:TabLayout.OnTabSelectedListener{
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    viewPager.currentItem = tab.position;
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                    TODO("Not yet implemented")
+                }
+
+
+            }
+        )
+
         getMe();
     }
 
     private fun getMe() {
-        Log.i("home_activity_me_method","Me Function execution start")
+        Log.i("home_activity_me_method", "Me Function execution start")
 //        TODO("Not yet implemented")
         UserService().me(applicationContext) { userData ->
-            Log.i("home_page_me_api_callback","Triggered")
+            Log.i("home_page_me_api_callback", "Triggered")
             if (userData != null) {
                 user = userData;
                 val headerView = navigationView.getHeaderView(0)

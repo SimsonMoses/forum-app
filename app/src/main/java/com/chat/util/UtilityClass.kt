@@ -24,4 +24,8 @@ object UtilityClass {
         }
         alertDialogBuilder.show()
     }
+
+    fun getBackEndHost():String{
+        return "https://forum-express-ms-production.up.railway.app"
+    }
 }
